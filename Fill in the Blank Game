@@ -1,0 +1,58 @@
+#Enter into Easy/Medium/Hard a string with blanks and into the appropriate bank put your answers in a list
+Easy = "Easy String with Blank0, Blank1, Blank2, Blank3, Blank4."
+Medium = "Medium String with Blank0 Blank1, Blank2, Blank3, Blank4, Blank5."
+Hard = "Hard String with Blank0, Blank1, Blank2, Blank3, Blank4, Blank5, Blank6"
+
+EasyBank = ["Answer1", "Answer2", "Answer3", "Answer4", "Answer5"]
+MediumBank = ["Answer1", "Answer2", "Answer3", "Answer4", "Answer5", "Answer6"]
+HardBank = ["Answer1", "Answer2", "Answer3", "Answer4", "Answer5", "Answer6", "Answer7"]
+
+Mode = None
+AnswerBank = None
+
+UserMode = raw_input("Enter a difficulty. Accepted difficulties are Easy, Medium and Hard.")
+###This will Assign the correct answer bank and define the correct difficulty mode### 
+if UserMode == "Easy" or UserMode == "easy":
+	Mode = Easy
+	UserMode = "Easy"
+	AnswerBank = EasyBank
+elif UserMode == "Medium" or UserMode == "medium":
+	Mode = Medium
+	UserMode = "Medium"
+	AnswerBank = MediumBank
+elif UserMode == "Hard" or UserMode == "hard":
+	Mode = Hard
+	UserMode = "Hard"
+	AnswerBank = HardBank
+else:
+#if user fails to enter a proper difficulty program will exit after error message
+	print "Oops, it appears as though you have entered an incorrect difficulty. Please try again."
+	raw_input("Next time try entering a defined difficulty.")
+	exit()
+	
+print "You have selected " + UserMode + ". You will have 3 guesses per Blank. Good luck."
+
+#Will loop until user runs out of guesses or wins the game
+#each correct answer will repeat the difficulty string with the correct answer filled in
+#and accept another answer
+#each incorrect answer will display how many guesses remain and accept another answer until out of guesses
+#if user runs out of guesses program will exit after message to user
+tBlank = len(AnswerBank)
+BankAnswer = 0
+Guesses = 3
+while Guesses > 0 and BankAnswer < tBlank:
+	print Mode
+	Attempt = raw_input("What word should replace Blank" + str(BankAnswer) + "? ")
+	if Attempt.title() == AnswerBank[BankAnswer]:
+		Mode = Mode.replace("Blank"+str(BankAnswer),AnswerBank[BankAnswer])
+		BankAnswer += 1
+		Guesses = 3
+	elif Attempt.title() != AnswerBank[BankAnswer]:
+		Guesses -= 1
+		print "You can guess " + str(Guesses) +  " more times."
+if BankAnswer == len(AnswerBank):
+	raw_input("Good job, you win.  Press any key to exit")
+
+elif Guesses == 0:
+	print "The answer was " + AnswerBank[BankAnswer]
+	raw_input("Unfortunately you have lost.  Feel free to try again. Press any key to exit")
